@@ -1,0 +1,19 @@
+{
+  "name": "carsthaan",
+  "version": "1.0.0",
+  "description": "a parking availability webapp",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/husainhz7/carsthaan.git"
+  },
+  "author": "Team Regalia",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/husainhz7/carsthaan/issues"
+  },
+  "homepage": "https://github.com/husainhz7/carsthaan#readme"
+}
