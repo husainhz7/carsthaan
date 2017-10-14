@@ -6,6 +6,6 @@ app.get('/',function(req,res,params){
 	res.render("index");
 })
 
-app.listen(5000, function(){
+app.listen(5050, function(){
 	console.log("HEllo")
 })
