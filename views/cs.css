@@ -1,0 +1,9 @@
+#wrapperHeader{
+    position: relative;
+    background-image:url(images/header.png);
+}
+
+IMG.displayed {
+    display: block;
+    margin-left: auto;
+    margin-right: auto }

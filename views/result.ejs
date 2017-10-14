@@ -1,96 +1,111 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title>Carsthan</title>
-    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
-    <meta charset="utf-8">
-    <style>
-      /* Always set the map height explicitly to define the size of the div
-       * element that contains the map. */
-      #map {
-        height: 80%;
-      }
-      /* Optional: Makes the sample page fill the window. */
-      html, body {
-        height: 100%;
-        margin: 0;
-        padding: 0;
-      }
-    </style>
-  </head>
-  <body>
-    <div id="map"></div>
-    <script>
-      // Note: This example requires that you consent to location sharing when
-      // prompted by your browser. If you see the error "The Geolocation service
-      // failed.", it means you probably did not give permission for the browser to
-      // locate you.
-      var request = require('request')
-    
+<html lang="en">
+<head>
+  <title>Carsthaan</title>
+  <link rel="stylesheet" href="\views\cs.css"> 
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
 
-      function initMap() {
-        var currentPosition;
-        var map, infoWindow;
-        var data = {
-          lat: 28.720641, lng:77.107509
-        }
-        var data2 = {
-          lat: 28.748742,
-          lng: 77.137672
-        }
-        map = new google.maps.Map(document.getElementById('map'), {
-          center: {lat: -34.397, lng: 150.644},
-          zoom: 15
-        });
-        infoWindow = new google.maps.InfoWindow;
+<div class="jumbotron">
+<div class="jumbotron text-center">
+  <div id="wrapperHeader">
+      <div id="header">
+               <img class="displayed" src="54.png" style="width:304px" alt="logo" >
+      </div> 
+  </div>
+    <h1>Car-स्थान </h1>
+    <p>We help you find parking lot</p>
+    <form class="form-inline">
+        <div class="input-group">
+          <input type="search" class="form-control" size="50" placeholder="Enter the destination" required>
+          <div class="input-group-btn">
+            <button type="button" class="btn btn-danger">Find</button>
+          </div>
+        </div>
+      </form>
+  </div>
+</div>
+ <style>
+.jumbotron {
+    background-color: #f4511e; /* Orange */
+    color: #ffffff;
+}
+#map {
+            height: 100%;
+          }
+          /* Optional: Makes the sample page fill the window. */
+          html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+          }
+</style>
+<div id="map"></div>
+<script>
+  
+  function initMap() {
+    var currentPosition;
+    var map, infoWindow;
+    var data = {
+      lat: 28.720641, 
+      lng:77.107509
+    }
+    var data2 = {
+      lat: 28.748742,
+      lng: 77.137672
+    }
+    map = new google.maps.Map(document.getElementById('map'), {
+      center: {lat: -34.397, lng: 150.644},
+      zoom: 15
+    });
+    infoWindow = new google.maps.InfoWindow;
 
-        var marker = new google.maps.Marker({
-          position: data[0],
-          map: map
-        })
-         var marker2 = new google.maps.Marker({
-          position: data[1],
-          map: map
-        })
+    var marker = new google.maps.Marker({
+      position: data,
+      map: map
+    })
+     var marker2 = new google.maps.Marker({
+      position: data2,
+      map: map
+    })
 
-        // Try HTML5 geolocation.
-        if (navigator.geolocation) {
-          navigator.geolocation.getCurrentPosition(function(position) {
-            var currentPosition = {
-              lat: position.coords.latitude,
-              lng: position.coords.longitude
-            };
+    // Try HTML5 geolocation.
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(function(position) {
+        var currentPosition = {
+          lat: position.coords.latitude,
+          lng: position.coords.longitude
+        };
 
-            infoWindow.setPosition(currentPosition);
-            infoWindow.setContent('Location found.');
-            infoWindow.open(map);
-            map.setCenter(<%result%>);
-
-
-
-          }, function() {
-            handleLocationError(true, infoWindow, map.getCenter());
-          });
-        } else {
-          // Browser doesn't support Geolocation
-          handleLocationError(false, infoWindow, map.getCenter());
-        }
-      }
-
-      function handleLocationError(browserHasGeolocation, infoWindow, pos) {
-        infoWindow.setPosition(pos);
-        infoWindow.setContent(browserHasGeolocation ?
-                              'Error: The Geolocation service failed.' :
-                              'Error: Your browser doesn\'t support geolocation.');
+        infoWindow.setPosition(currentPosition);
+        infoWindow.setContent('Location found.');
         infoWindow.open(map);
-      }
-    </script>
-    <script async defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCs2_VTWLD5Uu-Kw5irse8_jq2QRliDvw0&callback=initMap">
-    </script>
-    <div>
-    <button href="/result">FIND</button>
-      
-    </div>
-  </body>
-</html>
+        map.setCenter(<%result%>);
+
+      }, function() {
+        handleLocationError(true, infoWindow, map.getCenter());
+      });
+    } else {
+      // Browser doesn't support Geolocation
+      handleLocationError(false, infoWindow, map.getCenter());
+    }
+  }
+
+  function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+    infoWindow.setPosition(pos);
+    infoWindow.setContent(browserHasGeolocation ?
+                          'Error: The Geolocation service failed.' :
+                          'Error: Your browser doesn\'t support geolocation.');
+    infoWindow.open(map);
+  }
+</script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAGUQMmGCGpocUDTlxP9zvi_VYYAC0cdLk&callback=initMap"
+></script>
+<a  href="/result">FIND</a>
+
+</body>
+</html> 
