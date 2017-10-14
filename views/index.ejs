@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Geolocation</title>
+    <title>Carsthan</title>
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <meta charset="utf-8">
     <style>
       /* Always set the map height explicitly to define the size of the div
        * element that contains the map. */
       #map {
-        height: 100%;
+        height: 80%;
       }
       /* Optional: Makes the sample page fill the window. */
       html, body {
@@ -25,26 +25,54 @@
       // prompted by your browser. If you see the error "The Geolocation service
       // failed.", it means you probably did not give permission for the browser to
       // locate you.
-      var map, infoWindow;
+      var request = require('request')
+    
+
       function initMap() {
+        var currentPosition;
+        var map, infoWindow;
+        var data = {
+          lat: 28.720641, lng:77.107509
+        }
         map = new google.maps.Map(document.getElementById('map'), {
           center: {lat: -34.397, lng: 150.644},
-          zoom: 6
+          zoom: 15
         });
         infoWindow = new google.maps.InfoWindow;
+
+        var marker = new google.maps.Marker({
+          position: data,
+          map: map
+        })
 
         // Try HTML5 geolocation.
         if (navigator.geolocation) {
           navigator.geolocation.getCurrentPosition(function(position) {
-            var pos = {
+            var currentPosition = {
               lat: position.coords.latitude,
               lng: position.coords.longitude
             };
 
-            infoWindow.setPosition(pos);
+            infoWindow.setPosition(currentPosition);
             infoWindow.setContent('Location found.');
             infoWindow.open(map);
-            map.setCenter(pos);
+            map.setCenter(currentPosition);
+
+            var url = "https://maps.googleapis.com/maps/api/distancematrix/json?units=metric&origins="+currentPosition+"&destinations="+data+"&key=AIzaSyCs2_VTWLD5Uu-Kw5irse8_jq2QRliDvw0";
+            var closest, index;
+            request(url, function(error, response, body){
+              if(!error && response.statusCode == 200){
+                var distances = JSON.parse(body);
+                
+                for(var i =0; i<distances.rows[0].element.length; i++){
+                  if(distances.rows[0].element[i].distance.value < closest.value){
+                    closest = distances.rows[0].element[i];
+                    index = i;
+                  }
+                }
+                console.log(data);
+              }
+            });
           }, function() {
             handleLocationError(true, infoWindow, map.getCenter());
           });
